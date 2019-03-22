@@ -1,0 +1,78 @@
+##########################################################################################################################################
+#  Author   :  AHMAD RIFKY IDRUS
+#  DATE     : 2013-09-04
+#  COMPANY  : PRIVATE
+#  ACTION  :  change ranges to prefix   ..  example perl ~/myscript/OnlyOneIfpl.pl [Prefix start] [AmountOfPrefix]
+#                                               example perl ~/myscript/OnlyOneIf.pl 628167000000 760000
+##########################################################################################################################################
+
+#!/usr/bin/perl
+
+#PICK A NUMBER
+$nomorawal=shift or die;
+$jumlah=shift or die;
+$y = 0;
+$derajatawal = 0;
+$nomorawalperawi = $nomorawal;
+$jumlahperawi = $jumlah;
+
+while ($y eq 0){
+$y = $nomorawal % 10;
+$nomorawal /=10;
+$derajatawal +=1;
+}
+$derajatawal -=1;
+
+$myminimum = ();
+push @myminimum, $derajatawal;
+
+$derajatjumlah = 0;
+$y = 0;
+#check jumlah
+while ($y eq 0){
+$y = $jumlah % 10;
+$jumlah /=10;
+$derajatjumlah +=1;
+}
+$derajatjumlah -=1;
+
+push @myminimum, $derajatjumlah;
+
+use List::Util qw(max maxstr min minstr);
+my $pembagieksponen = min @myminimum;
+
+
+$deretawal = $nomorawalperawi / (10 ** $pembagieksponen);
+$jumlahbaru = $jumlahperawi / (10 ** $pembagieksponen);
+
+$y = 0; $x =0;
+$panjang = length $jumlahbaru;
+
+while ($y < $jumlahbaru){
+push @findprefix, $deretawal;
+$deretawal +=1;
+$y +=1
+}
+$how_manyseq = @findprefix;
+
+#normalisasi 10
+while ($how_manyseq ge 10){
+$testderet = ($findprefix[9] - $findprefix[0] + 1) % 10;
+        if (( $testderet == 0 ) && ( $findprefix[0] % 10 == 0)) {
+        $findprefix[0] = $findprefix[0] / 10 ;
+        print "hasil akhir $findprefix[0] dan $how_manyseq \n";
+        splice (@findprefix, 0, 10) ;
+        }
+        else {
+        print "hasil akhir2 $findprefix[0] dan $how_manyseq \n";
+        shift @findprefix;
+        }
+        #print "hasil akhir3 $findprefix[0] dan $how_manyseq \n";
+         $how_manyseq = @findprefix;
+        }
+        #print @findprefix;
+        my @everyone = map { "hasil akhir3c $_ "} @findprefix;
+
+    foreach my $prefixnya (@everyone) {
+        print "$prefixnya\n";
+    }
